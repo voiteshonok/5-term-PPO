@@ -11,26 +11,34 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        /*val expression = ExpressionBuilder("e^pi").build()
+        val result = expression.evaluate()
+        val longResult = result.toLong()
+        if(result == longResult.toDouble())
+            tvResult.text = longResult.toString()
+        else
+            tvResult.text = result.toString()*/
+
         //Numbers
-        tvOne.setOnClickListener { appendOnExpresstion("1", true) }
-        tvTwo.setOnClickListener { appendOnExpresstion("2", true) }
-        tvThree.setOnClickListener { appendOnExpresstion("3", true) }
-        tvFour.setOnClickListener { appendOnExpresstion("4", true) }
-        tvFive.setOnClickListener { appendOnExpresstion("5", true) }
-        tvSix.setOnClickListener { appendOnExpresstion("6", true) }
-        tvSeven.setOnClickListener { appendOnExpresstion("7", true) }
-        tvEight.setOnClickListener { appendOnExpresstion("8", true) }
-        tvNine.setOnClickListener { appendOnExpresstion("9", true) }
-        tvZero.setOnClickListener { appendOnExpresstion("0", true) }
-        tvDot.setOnClickListener { appendOnExpresstion(".", true) }
+        tvOne.setOnClickListener { appendOnExpression("1", true) }
+        tvTwo.setOnClickListener { appendOnExpression("2", true) }
+        tvThree.setOnClickListener { appendOnExpression("3", true) }
+        tvFour.setOnClickListener { appendOnExpression("4", true) }
+        tvFive.setOnClickListener { appendOnExpression("5", true) }
+        tvSix.setOnClickListener { appendOnExpression("6", true) }
+        tvSeven.setOnClickListener { appendOnExpression("7", true) }
+        tvEight.setOnClickListener { appendOnExpression("8", true) }
+        tvNine.setOnClickListener { appendOnExpression("9", true) }
+        tvZero.setOnClickListener { appendOnExpression("0", true) }
+        tvDot.setOnClickListener { appendOnExpression(".", true) }
 
         //Operators
-        tvPlus.setOnClickListener { appendOnExpresstion("+", false) }
-        tvMinus.setOnClickListener { appendOnExpresstion("-", false) }
-        tvMul.setOnClickListener { appendOnExpresstion("*", false) }
-        tvDivide.setOnClickListener { appendOnExpresstion("/", false) }
-        tvOpen.setOnClickListener { appendOnExpresstion("(", false) }
-        tvClose.setOnClickListener { appendOnExpresstion(")", false) }
+        tvPlus.setOnClickListener { appendOnExpression("+", false) }
+        tvMinus.setOnClickListener { appendOnExpression("-", false) }
+        tvMul.setOnClickListener { appendOnExpression("*", false) }
+        tvDivide.setOnClickListener { appendOnExpression("/", false) }
+        tvOpen.setOnClickListener { appendOnExpression("(", false) }
+        tvClose.setOnClickListener { appendOnExpression(")", false) }
 
         tvClear.setOnClickListener {
             tvExpression.text = ""
@@ -61,19 +69,28 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun appendOnExpresstion(string: String, canClear: Boolean){
+    fun appendOnExpression(string: String, canClear: Boolean){
         if(tvResult.text.isNotEmpty()){
             tvExpression.text = ""
         }
 
-        if(canClear){
-            tvResult.text = ""
-            tvExpression.append(string)
-        }
-        else{
+        if(!canClear){
             tvExpression.append(tvResult.text)
-            tvExpression.append(string)
-            tvResult.text = ""
         }
+        tvExpression.append(string)
+        tvResult.text = ""
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.run {
+            putString("Expression", tvExpression.text.toString())
+            putString("Result", tvResult.text.toString())
+        }
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        tvExpression.text = savedInstanceState.getString("Expression")
+        tvResult.text = savedInstanceState.getString("Result")
     }
 }
