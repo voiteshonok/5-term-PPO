@@ -5,66 +5,79 @@ import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main.*
 import net.objecthunter.exp4j.ExpressionBuilder
 import android.util.Log
+import android.view.View
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        /*val expression = ExpressionBuilder("e^pi").build()
+        /*val expression = ExpressionBuilder("4!").build()
         val result = expression.evaluate()
         val longResult = result.toLong()
         if(result == longResult.toDouble())
             tvResult.text = longResult.toString()
         else
             tvResult.text = result.toString()*/
+    }
 
-        //Numbers
-        tvOne.setOnClickListener { appendOnExpression("1", true) }
-        tvTwo.setOnClickListener { appendOnExpression("2", true) }
-        tvThree.setOnClickListener { appendOnExpression("3", true) }
-        tvFour.setOnClickListener { appendOnExpression("4", true) }
-        tvFive.setOnClickListener { appendOnExpression("5", true) }
-        tvSix.setOnClickListener { appendOnExpression("6", true) }
-        tvSeven.setOnClickListener { appendOnExpression("7", true) }
-        tvEight.setOnClickListener { appendOnExpression("8", true) }
-        tvNine.setOnClickListener { appendOnExpression("9", true) }
-        tvZero.setOnClickListener { appendOnExpression("0", true) }
-        tvDot.setOnClickListener { appendOnExpression(".", true) }
+    fun onButtonClick(view: View?) {
+        when(view?.id) {
+            //Numbers
+            R.id.tvOne -> appendOnExpression("1", true)
+            R.id.tvTwo -> appendOnExpression("2", true)
+            R.id.tvThree -> appendOnExpression("3", true)
+            R.id.tvFour -> appendOnExpression("4", true)
+            R.id.tvFive -> appendOnExpression("5", true)
+            R.id.tvSix -> appendOnExpression("6", true)
+            R.id.tvSeven -> appendOnExpression("7", true)
+            R.id.tvEight -> appendOnExpression("8", true)
+            R.id.tvNine -> appendOnExpression("9", true)
+            R.id.tvZero -> appendOnExpression("0", true)
+            R.id.tvDot -> appendOnExpression(".", true)
 
-        //Operators
-        tvPlus.setOnClickListener { appendOnExpression("+", false) }
-        tvMinus.setOnClickListener { appendOnExpression("-", false) }
-        tvMul.setOnClickListener { appendOnExpression("*", false) }
-        tvDivide.setOnClickListener { appendOnExpression("/", false) }
-        tvOpen.setOnClickListener { appendOnExpression("(", false) }
-        tvClose.setOnClickListener { appendOnExpression(")", false) }
+            //Operators
+            R.id.tvPlus -> appendOnExpression("+", false)
+            R.id.tvMinus -> appendOnExpression("-", false)
+            R.id.tvMul -> appendOnExpression("*", false)
+            R.id.tvDivide -> appendOnExpression("/", false)
+            R.id.tvOpen -> appendOnExpression("(", false)
+            R.id.tvClose -> appendOnExpression(")", false)
 
-        tvClear.setOnClickListener {
-            tvExpression.text = ""
-            tvResult.text = ""
-        }
+            //Land operators
+            R.id.tvSin -> appendOnExpression("sin(", false)
+            R.id.tvCos -> appendOnExpression("cos", false)
+            R.id.tvTan -> appendOnExpression("tan(", false)
+            R.id.tvLn -> appendOnExpression("log(", false)
+            R.id.tvE -> appendOnExpression("e", false)
+            R.id.tvPi -> appendOnExpression("pi", false)
 
-        tvBack.setOnClickListener {
-            val string = tvExpression.text.toString()
-            if(string.isNotEmpty()){
-                tvExpression.text = string.substring(0,string.length-1)
+            R.id.tvClear -> {
+                tvExpression.text = ""
+                tvResult.text = ""
             }
-            tvResult.text = ""
-        }
 
-        tvEquals.setOnClickListener {
-            try {
-                val expression = ExpressionBuilder(tvExpression.text.toString()).build()
-                val result = expression.evaluate()
-                val longResult = result.toLong()
-                if(result == longResult.toDouble())
-                    tvResult.text = longResult.toString()
-                else
-                    tvResult.text = result.toString()
+            R.id.tvBack -> {
+                val string = tvExpression.text.toString()
+                if(string.isNotEmpty()){
+                    tvExpression.text = string.substring(0,string.length-1)
+                }
+                tvResult.text = ""
+            }
 
-            }catch (e:Exception){
-                Log.d("Exception"," message : " + e.message )
+            R.id.tvEquals -> {
+                try {
+                    val expression = ExpressionBuilder(tvExpression.text.toString()).build()
+                    val result = expression.evaluate()
+                    val longResult = result.toLong()
+                    if(result == longResult.toDouble())
+                        tvResult.text = longResult.toString()
+                    else
+                        tvResult.text = result.toString()
+
+                }catch (e:Exception){
+                    Log.d("Exception"," message : " + e.message )
+                }
             }
         }
     }

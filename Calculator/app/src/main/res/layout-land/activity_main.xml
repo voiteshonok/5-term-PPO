@@ -38,6 +38,21 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/tvSin"
+                style="@style/ActionButtonStyle"
+                android:text="sin" />
+
+            <TextView
+                android:id="@+id/tvCos"
+                style="@style/ActionButtonStyle"
+                android:text="cos" />
+
+            <TextView
+                android:id="@+id/tvTan"
+                style="@style/ActionButtonStyle"
+                android:text="tg" />
+
+            <TextView
                 android:id="@+id/tvClear"
                 style="@style/ActionButtonStyle"
                 android:text="CE" />
@@ -67,6 +82,16 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/tvLn"
+                style="@style/ActionButtonStyle"
+                android:text="ln" />
+
+            <TextView
+                android:id="@+id/tvEX"
+                style="@style/ActionButtonStyle"
+                android:text="e^x" />
+
+            <TextView
                 android:id="@+id/tvSeven"
                 style="@style/NumberButtonStyle"
                 android:text="7" />
@@ -93,6 +118,15 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
+            <TextView
+                android:id="@+id/tvE"
+                style="@style/ActionButtonStyle"
+                android:text="e" />
+
+            <TextView
+                android:id="@+id/tvPi"
+                style="@style/ActionButtonStyle"
+                android:text="π" />
 
             <TextView
                 android:id="@+id/tvFour"
@@ -122,6 +156,16 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
+            <TextView
+                android:id="@+id/tvSqrt"
+                style="@style/ActionButtonStyle"
+                android:text="√" />
+
+
+            <TextView
+                android:id="@+id/tvXY"
+                style="@style/ActionButtonStyle"
+                android:text="^" />
 
             <TextView
                 android:id="@+id/tvOne"
@@ -150,6 +194,16 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvX2"
+                style="@style/ActionButtonStyle"
+                android:text="x^2" />
+
+            <TextView
+                android:id="@+id/tv2X"
+                style="@style/ActionButtonStyle"
+                android:text="2^x" />
 
             <TextView
                 android:id="@+id/tvDot"
