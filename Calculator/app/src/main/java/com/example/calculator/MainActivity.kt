@@ -8,6 +8,8 @@ import android.util.Log
 import android.view.View
 
 class MainActivity : AppCompatActivity() {
+    private var expression: Expression = Expression()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -46,29 +48,32 @@ class MainActivity : AppCompatActivity() {
 
             //Land operators
             R.id.tvSin -> appendOnExpression("sin(", false)
-            R.id.tvCos -> appendOnExpression("cos", false)
+            R.id.tvCos -> appendOnExpression("cos(", false)
             R.id.tvTan -> appendOnExpression("tan(", false)
             R.id.tvLn -> appendOnExpression("log(", false)
             R.id.tvE -> appendOnExpression("e", false)
             R.id.tvPi -> appendOnExpression("pi", false)
 
             R.id.tvClear -> {
-                tvExpression.text = ""
+                expression.clear()
+                tvExpression.text = expression.getString() //TODO
                 tvResult.text = ""
             }
 
             R.id.tvBack -> {
-                val string = tvExpression.text.toString()
+                /*val string = tvExpression.text.toString()
                 if(string.isNotEmpty()){
                     tvExpression.text = string.substring(0,string.length-1)
-                }
+                }*/
+                expression.pop()//TODO
+                tvExpression.text = expression.getString()
                 tvResult.text = ""
             }
 
             R.id.tvEquals -> {
                 try {
-                    val expression = ExpressionBuilder(tvExpression.text.toString()).build()
-                    val result = expression.evaluate()
+                    val expressionBuilder = ExpressionBuilder(tvExpression.text.toString()).build()
+                    val result = expressionBuilder.evaluate()
                     val longResult = result.toLong()
                     if(result == longResult.toDouble())
                         tvResult.text = longResult.toString()
@@ -82,28 +87,34 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun appendOnExpression(string: String, canClear: Boolean){
+    private fun appendOnExpression(string: String, canClear: Boolean){
         if(tvResult.text.isNotEmpty()){
-            tvExpression.text = ""
-        }
+            expression.clear()//TODO
+            tvExpression.text = expression.getString()
+            }
 
         if(!canClear){
-            tvExpression.append(tvResult.text)
+            //tvExpression.append(tvResult.text)
+            expression.append(tvResult.text as String)
         }
-        tvExpression.append(string)
+        //tvExpression.append(string)
+        expression.append(string)
+        tvExpression.text = expression.getString()//TODO
         tvResult.text = ""
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState.run {
-            putString("Expression", tvExpression.text.toString())
+            //putString("Expression", tvExpression.text.toString())
             putString("Result", tvResult.text.toString())
+            putParcelable("expression", expression)
         }
         super.onSaveInstanceState(outState)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        tvExpression.text = savedInstanceState.getString("Expression")
+        expression = savedInstanceState.getParcelable<Expression>("expression")!!
+        tvExpression.text = expression.getString()//TODO
         tvResult.text = savedInstanceState.getString("Result")
     }
 }
