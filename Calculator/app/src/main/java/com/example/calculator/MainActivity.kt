@@ -55,9 +55,8 @@ class MainActivity : AppCompatActivity() {
             R.id.tvPi -> appendOnExpression("pi", false)
 
             R.id.tvClear -> {
-                expression.clear()
-                tvExpression.text = expression.getString() //TODO
-                tvResult.text = ""
+                expression.clear() //TODO
+                expUpdate()
             }
 
             R.id.tvBack -> {
@@ -66,25 +65,17 @@ class MainActivity : AppCompatActivity() {
                     tvExpression.text = string.substring(0,string.length-1)
                 }*/
                 expression.pop()//TODO
-                tvExpression.text = expression.getString()
-                tvResult.text = ""
             }
 
             R.id.tvEquals -> {
-                try {
-                    val expressionBuilder = ExpressionBuilder(tvExpression.text.toString()).build()
-                    val result = expressionBuilder.evaluate()
-                    val longResult = result.toLong()
-                    if(result == longResult.toDouble())
-                        tvResult.text = longResult.toString()
-                    else
-                        tvResult.text = result.toString()
-
-                }catch (e:Exception){
-                    Log.d("Exception"," message : " + e.message )
-                }
+                tvResult.text = expression.getStringResult()
             }
         }
+    }
+
+    private fun expUpdate(){
+        tvExpression.text = expression.getString()
+        tvResult.text = ""
     }
 
     private fun appendOnExpression(string: String, canClear: Boolean){
@@ -98,9 +89,8 @@ class MainActivity : AppCompatActivity() {
             expression.append(tvResult.text as String)
         }
         //tvExpression.append(string)
-        expression.append(string)
-        tvExpression.text = expression.getString()//TODO
-        tvResult.text = ""
+        expression.append(string) //TODO
+        expUpdate()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

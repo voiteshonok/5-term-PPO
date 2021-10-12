@@ -2,6 +2,9 @@ package com.example.calculator
 
 import android.os.Parcel
 import android.os.Parcelable
+import android.util.Log
+import kotlinx.android.synthetic.main.activity_main.*
+import net.objecthunter.exp4j.ExpressionBuilder
 
 class Expression() :Parcelable{
     private var deq :ArrayDeque<String> = ArrayDeque<String>()
@@ -26,6 +29,23 @@ class Expression() :Parcelable{
 
     fun getString(): String{
         return deq.joinToString("")
+    }
+
+    fun getStringResult(): String {
+        try {
+            val expressionBuilder = ExpressionBuilder(getString()).build()
+            val result = expressionBuilder.evaluate()
+            val longResult = result.toLong()
+
+            return if(result == longResult.toDouble())
+                longResult.toString()
+            else
+                result.toString()
+
+        }catch (e:Exception){
+            Log.d("Exception"," message : " + e.message )
+        }
+        return ""
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
