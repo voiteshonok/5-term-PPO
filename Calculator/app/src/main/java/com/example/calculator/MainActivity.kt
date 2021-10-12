@@ -14,6 +14,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        expression.addSubDeq (fun (){
+            tvExpression.text = expression.getString()
+        })
+
+        expression.addSubResult (fun (){
+            tvResult.text = expression.getResult()
+        })
+
         /*val expression = ExpressionBuilder("4!").build()
         val result = expression.evaluate()
         val longResult = result.toLong()
@@ -51,46 +59,38 @@ class MainActivity : AppCompatActivity() {
             R.id.tvCos -> appendOnExpression("cos(", false)
             R.id.tvTan -> appendOnExpression("tan(", false)
             R.id.tvLn -> appendOnExpression("log(", false)
+            R.id.tvEX -> appendOnExpression("e^(", false)
             R.id.tvE -> appendOnExpression("e", false)
             R.id.tvPi -> appendOnExpression("pi", false)
+            R.id.tvSqrt -> appendOnExpression("sqrt(", false)
+            R.id.tvPow -> appendOnExpression("^(", false)
+            R.id.tvSqr -> appendOnExpression("^(2)", false)
+            R.id.tv2X -> appendOnExpression("2^(", false)
 
             R.id.tvClear -> {
-                expression.clear() //TODO
-                expUpdate()
+                expression.clear()
             }
 
             R.id.tvBack -> {
-                /*val string = tvExpression.text.toString()
-                if(string.isNotEmpty()){
-                    tvExpression.text = string.substring(0,string.length-1)
-                }*/
-                expression.pop()//TODO
+                expression.pop()
             }
 
             R.id.tvEquals -> {
-                tvResult.text = expression.getStringResult()
+                expression.solve()
             }
         }
-    }
-
-    private fun expUpdate(){
-        tvExpression.text = expression.getString()
-        tvResult.text = ""
     }
 
     private fun appendOnExpression(string: String, canClear: Boolean){
         if(tvResult.text.isNotEmpty()){
-            expression.clear()//TODO
-            tvExpression.text = expression.getString()
+            expression.clear()
+            if(!canClear){
+                expression.append(tvResult.text as String)
             }
-
-        if(!canClear){
-            //tvExpression.append(tvResult.text)
-            expression.append(tvResult.text as String)
+            expression.resultStringClear()
         }
-        //tvExpression.append(string)
-        expression.append(string) //TODO
-        expUpdate()
+
+        expression.append(string)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -104,7 +104,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         expression = savedInstanceState.getParcelable<Expression>("expression")!!
-        tvExpression.text = expression.getString()//TODO
+        //tvExpression.text = expression.getString()//TODO
         tvResult.text = savedInstanceState.getString("Result")
     }
 }
