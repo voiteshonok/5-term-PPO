@@ -1,18 +1,24 @@
 package com.example.calculator
 
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main.*
 import net.objecthunter.exp4j.ExpressionBuilder
 import android.util.Log
 import android.view.View
+import com.example.calculator.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private var expression: Expression = Expression()
+    private lateinit var bind: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        //setContentView(R.layout.activity_main)
+        bind = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(bind.root)
 
         expression.addSubDeq (fun (){
             tvExpression.text = expression.getString()
@@ -22,13 +28,13 @@ class MainActivity : AppCompatActivity() {
             tvResult.text = expression.getResult()
         })
 
-        /*val expression = ExpressionBuilder("4!").build()
+        val expression = ExpressionBuilder("π").build()
         val result = expression.evaluate()
         val longResult = result.toLong()
         if(result == longResult.toDouble())
             tvResult.text = longResult.toString()
         else
-            tvResult.text = result.toString()*/
+            tvResult.text = result.toString()
     }
 
     fun onButtonClick(view: View?) {
@@ -77,6 +83,7 @@ class MainActivity : AppCompatActivity() {
 
             R.id.tvEquals -> {
                 expression.solve()
+                changeOrientation()
             }
         }
     }
@@ -93,7 +100,7 @@ class MainActivity : AppCompatActivity() {
         expression.append(string)
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
+    /*override fun onSaveInstanceState(outState: Bundle) {
         outState.run {
             //putString("Expression", tvExpression.text.toString())
             putString("Result", tvResult.text.toString())
@@ -106,5 +113,15 @@ class MainActivity : AppCompatActivity() {
         expression = savedInstanceState.getParcelable<Expression>("expression")!!
         //tvExpression.text = expression.getString()//TODO
         tvResult.text = savedInstanceState.getString("Result")
+    }*/
+
+    private fun changeOrientation() {
+        val orientation = this.resources.configuration.orientation
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+        } else {
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+        }
+        setContentView(bind.root)
     }
 }
