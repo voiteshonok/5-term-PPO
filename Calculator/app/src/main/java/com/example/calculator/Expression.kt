@@ -6,15 +6,15 @@ import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
 import net.objecthunter.exp4j.ExpressionBuilder
 
-class Expression() :Parcelable{
+class Expression(){
     private var deq :ArrayDeque<String> = ArrayDeque<String>()
     private var resultString :String = ""
     private var deqSubs :ArrayList<()->Unit> = ArrayList<()->Unit>()
     private var resultSubs :ArrayList<()->Unit> = ArrayList<()->Unit>()
 
-    constructor(parcel: Parcel) : this() {
-        deq = parcel.readString()?.split(" ") as ArrayDeque<String>
-    }
+    //private var hasLeftBrace :List<String> = listOf("sin(", "cos(", "tan(", "(", "log(", "sqrt(", "^(", "2^(", "e^(")
+    private var notFirst :List<String> = listOf("^(2)", "^(", "*", "/")
+    private var ops :List<String> = listOf("-", "+", "*", "/")
 
     private fun notifyDeq(){
         for (sub in deqSubs){
@@ -37,6 +37,19 @@ class Expression() :Parcelable{
     }
 
     fun append(string: String){
+        fun isFirst(): Boolean{
+            return (deq.size == 0 || deq.last().endsWith("("))
+        }
+
+        if ((notFirst.contains(string) && isFirst()) ||
+                ((getBrCount() == 0 || deq.last().endsWith("(")) && string == ")")){
+            return
+        }
+
+        if (ops.contains(string) && ops.contains(deq.last())){
+            pop()
+        }
+
         deq.add(string)
         notifyDeq()
     }
@@ -66,9 +79,9 @@ class Expression() :Parcelable{
         return resultString
     }
 
-    fun solve(){
+    private fun getBrCount() :Int{
         var brCount = 0
-        var text = getString()
+        val text = getString()
         for (i in text){
             if (i == '('){
                 brCount += 1
@@ -77,6 +90,12 @@ class Expression() :Parcelable{
                 brCount -= 1
             }
         }
+
+        return brCount
+    }
+
+    fun solve(){
+        val brCount = getBrCount()
         for (i in 1..brCount){
             deq.add(")")
         }
@@ -95,25 +114,8 @@ class Expression() :Parcelable{
 
         }catch (e:Exception){
             Log.d("Exception"," message : " + e.message )
-        }
-    }
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        //parcel.writeArray(arrayOf(deq))
-        parcel.writeString(deq.joinToString(" "))//TODO remake storing, mb-binding
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<Expression> {
-        override fun createFromParcel(parcel: Parcel): Expression {
-            return Expression(parcel)
-        }
-
-        override fun newArray(size: Int): Array<Expression?> {
-            return arrayOfNulls(size)
+            resultString = "Exception message : " + e.message.toString()
+            notifyResult()//TODO
         }
     }
 }

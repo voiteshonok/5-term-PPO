@@ -83,7 +83,6 @@ class MainActivity : AppCompatActivity() {
 
             R.id.tvEquals -> {
                 expression.solve()
-                changeOrientation()
             }
         }
     }
@@ -98,30 +97,5 @@ class MainActivity : AppCompatActivity() {
         }
 
         expression.append(string)
-    }
-
-    /*override fun onSaveInstanceState(outState: Bundle) {
-        outState.run {
-            //putString("Expression", tvExpression.text.toString())
-            putString("Result", tvResult.text.toString())
-            putParcelable("expression", expression)
-        }
-        super.onSaveInstanceState(outState)
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        expression = savedInstanceState.getParcelable<Expression>("expression")!!
-        //tvExpression.text = expression.getString()//TODO
-        tvResult.text = savedInstanceState.getString("Result")
-    }*/
-
-    private fun changeOrientation() {
-        val orientation = this.resources.configuration.orientation
-        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-        } else {
-            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
-        }
-        setContentView(bind.root)
     }
 }
