@@ -142,7 +142,6 @@
             <TextView
                 android:id="@+id/tvPlus"
                 style="@style/ActionButtonStyle"
-                android:onClick="onPlusButtonClick"
                 android:text="+" />
 
         </LinearLayout>

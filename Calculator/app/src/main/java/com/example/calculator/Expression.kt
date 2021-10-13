@@ -42,11 +42,11 @@ class Expression(){
         }
 
         if ((notFirst.contains(string) && isFirst()) ||
-                ((getBrCount() == 0 || deq.last().endsWith("(")) && string == ")")){
+                ((getBrCount() == 0 || deq.last().endsWith("(") || ops.contains(deq.last())) && string == ")")){
             return
         }
 
-        if (ops.contains(string) && ops.contains(deq.last())){
+        if (deq.isNotEmpty() && ops.contains(string) && ops.contains(deq.last())){
             pop()
         }
 
@@ -94,14 +94,15 @@ class Expression(){
         return brCount
     }
 
-    fun solve(){
+    fun solve() :ResultStatus{
         val brCount = getBrCount()
+        var text = getString()
         for (i in 1..brCount){
-            deq.add(")")
+            text += ")"
         }
 
         try {
-            val expressionBuilder = ExpressionBuilder(getString()).build()
+            val expressionBuilder = ExpressionBuilder(if (text.isNullOrEmpty()) "0" else text).build()
             val result = expressionBuilder.evaluate()
             val longResult = result.toLong()
 
@@ -111,11 +112,11 @@ class Expression(){
                 result.toString()
 
             notifyResult()
-
+            return ResultStatus.OK
         }catch (e:Exception){
             Log.d("Exception"," message : " + e.message )
-            resultString = "Exception message : " + e.message.toString()
-            notifyResult()//TODO
+
+            return ResultStatus.ERROR
         }
     }
 }

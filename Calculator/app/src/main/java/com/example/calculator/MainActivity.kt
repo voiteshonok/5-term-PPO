@@ -8,6 +8,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import net.objecthunter.exp4j.ExpressionBuilder
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import com.example.calculator.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -82,7 +83,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             R.id.tvEquals -> {
-                expression.solve()
+                solve()
             }
         }
     }
@@ -97,5 +98,18 @@ class MainActivity : AppCompatActivity() {
         }
 
         expression.append(string)
+    }
+
+    private fun solve(){
+        val status = expression.solve()
+        if (status != ResultStatus.OK){
+            val toast = Toast.makeText(applicationContext, status.name, Toast.LENGTH_SHORT)
+            toast.show()
+        }
+    }
+
+    fun onPlusButtonClick(view: View?) {
+        val toast = Toast.makeText(applicationContext, "buy a full version", Toast.LENGTH_SHORT)
+        toast.show()
     }
 }
