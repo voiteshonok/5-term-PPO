@@ -29,13 +29,13 @@ class MainActivity : AppCompatActivity() {
             tvResult.text = expression.getResult()
         })
 
-        val expression = ExpressionBuilder("π").build()
+        /*val expression = ExpressionBuilder("π").build()
         val result = expression.evaluate()
         val longResult = result.toLong()
         if(result == longResult.toDouble())
             tvResult.text = longResult.toString()
         else
-            tvResult.text = result.toString()
+            tvResult.text = result.toString()*/
     }
 
     fun onButtonClick(view: View?) {
