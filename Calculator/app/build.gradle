@@ -21,7 +21,7 @@ def getVersionCode = { ->
 def getVersionName = { ->
     try {
         def stdout = new ByteArrayOutputStream()
-        exec {
+        exec {//dfdfs
             commandLine 'git', 'describe', '--tags'
             standardOutput = stdout
         }
