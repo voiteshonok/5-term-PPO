@@ -1,30 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black"
-    android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/tvExpression"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ellipsize="start"
-        android:gravity="end"
-        android:singleLine="true"
-        android:textColor="@color/numberButton"
-        android:textSize="40sp" />
-
-    <TextView
-        android:id="@+id/tvResult"
-        android:layout_width="match_parent"
-        android:layout_height="76dp"
-        android:ellipsize="end"
-        android:gravity="end"
-        android:singleLine="true"
-        android:textColor="@color/numberButton"
-        android:textSize="30sp" />
+    tools:context=".BasicFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,21 +15,6 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tvSin"
-                style="@style/ActionButtonStyle"
-                android:text="sin" />
-
-            <TextView
-                android:id="@+id/tvCos"
-                style="@style/ActionButtonStyle"
-                android:text="cos" />
-
-            <TextView
-                android:id="@+id/tvTan"
-                style="@style/ActionButtonStyle"
-                android:text="tg" />
 
             <TextView
                 android:id="@+id/tvClear"
@@ -82,16 +46,6 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tvLn"
-                style="@style/ActionButtonStyle"
-                android:text="ln" />
-
-            <TextView
-                android:id="@+id/tvEX"
-                style="@style/ActionButtonStyle"
-                android:text="e^x" />
-
-            <TextView
                 android:id="@+id/tvSeven"
                 style="@style/NumberButtonStyle"
                 android:text="7" />
@@ -118,15 +72,6 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tvE"
-                style="@style/ActionButtonStyle"
-                android:text="e" />
-
-            <TextView
-                android:id="@+id/tvPi"
-                style="@style/ActionButtonStyle"
-                android:text="π" />
 
             <TextView
                 android:id="@+id/tvFour"
@@ -156,16 +101,6 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tvSqrt"
-                style="@style/ActionButtonStyle"
-                android:text="√" />
-
-
-            <TextView
-                android:id="@+id/tvPow"
-                style="@style/ActionButtonStyle"
-                android:text="^" />
 
             <TextView
                 android:id="@+id/tvOne"
@@ -185,6 +120,7 @@
             <TextView
                 android:id="@+id/tvPlus"
                 style="@style/ActionButtonStyle"
+                android:onClick="onPlusButtonClick"
                 android:text="+" />
 
         </LinearLayout>
@@ -194,16 +130,6 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tvSqr"
-                style="@style/ActionButtonStyle"
-                android:text="x^2" />
-
-            <TextView
-                android:id="@+id/tv2X"
-                style="@style/ActionButtonStyle"
-                android:text="2^x" />
 
             <TextView
                 android:id="@+id/tvDot"
@@ -231,5 +157,4 @@
 
     </LinearLayout>
 
-
-</LinearLayout>
+</FrameLayout>

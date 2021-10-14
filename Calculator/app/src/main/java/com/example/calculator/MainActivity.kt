@@ -17,9 +17,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_main)
         bind = ActivityMainBinding.inflate(layoutInflater)
         setContentView(bind.root)
+        setOrientation()
 
         expression.addSubDeq (fun (){
             tvExpression.text = expression.getString()
@@ -111,5 +111,26 @@ class MainActivity : AppCompatActivity() {
     fun onPlusButtonClick(view: View?) {
         val toast = Toast.makeText(applicationContext, "buy a full version", Toast.LENGTH_SHORT)
         toast.show()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+
+        setOrientation()
+    }
+
+    private fun setOrientation(){
+        val orientation = this.resources.configuration.orientation
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragment, ScientificFragment.newInstance())
+                .commit()
+        } else if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragment, BasicFragment.newInstance())
+                .commit()
+        }
     }
 }
